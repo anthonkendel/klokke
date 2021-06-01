@@ -12,8 +12,8 @@
 
         <h2>{{ msToTime(session.timestamp) }}</h2>
 
-        <button class="button" type="button" @click="onClickStart">START</button>
-        <button class="button" type="button" @click="onClickStop">STOP</button>
+        <button class="k-button" type="button" @click="onClickStart">Start</button>
+        <button class="k-button secondary" type="button" @click="onClickStop">Stop</button>
       </template>
     </div>
   </div>

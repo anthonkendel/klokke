@@ -2,7 +2,7 @@
   <div class="container">
     <div>
       <h1>Klokke</h1>
-      <button class="button" type="button" @click="onClickNew">NEW</button>
+      <button class="k-button" type="button" @click="onClickNew">New</button>
     </div>
   </div>
 </template>
