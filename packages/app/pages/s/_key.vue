@@ -8,7 +8,7 @@
           <h2>{{ session.key }}</h2>
           <h3>{{ msToTime(session.timestamp) }}</h3>
 
-          <button class="k-button" type="button" @click="onClickStart">Start</button>
+          <button class="k-button primary" type="button" @click="onClickStart">Start</button>
           <button class="k-button secondary" type="button" @click="onClickStop">Stop</button>
         </template>
       </div>

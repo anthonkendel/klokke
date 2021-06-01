@@ -39,7 +39,7 @@ h6 {
 }
 
 .k-button {
-  background-color: lighten(darkslategray, 5%);
+  background-color: lighten(black, 20%);
   border-radius: 10rem;
   border: 1px solid whitesmoke;
   color: whitesmoke;
@@ -54,7 +54,17 @@ h6 {
   &:hover,
   &:focus,
   &:active {
-    background-color: darken(darkslategray, 5%);
+    background-color: darken(lighten(black, 20%), 5%);
+  }
+
+  &.primary {
+    background-color: lighten(darkslategray, 5%);
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: darken(lighten(darkslategray, 5%), 5%);
+    }
   }
 
   &.secondary {

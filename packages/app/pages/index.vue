@@ -3,7 +3,7 @@
     <div class="row center">
       <div class="column text-center">
         <h1>Klokke</h1>
-        <button class="k-button" type="button" @click="onClickNew">New</button>
+        <button class="k-button primary" type="button" @click="onClickNew">New</button>
       </div>
     </div>
   </div>
