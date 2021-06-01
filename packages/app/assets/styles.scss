@@ -10,12 +10,32 @@ h4,
 h5,
 h6 {
   font-family: 'Nunito', sans-serif;
+  margin-bottom: 0.5rem;
 }
 
 .container {
+  height: 100vh;
   margin: 0 auto;
-  padding: 1rem;
   max-width: 1000px;
+  padding: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  height: 100%;
+
+  &.center {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .column {
+    display: block;
+  }
 }
 
 .k-button {

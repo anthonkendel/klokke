@@ -1,20 +1,17 @@
 <template>
   <div class="container">
-    <div>
-      <h1>Klokke</h1>
+    <div class="row center">
+      <div class="column text-center">
+        <h1>Klokke</h1>
 
-      <template v-if="session.key && !isLoading">
-        <h2>{{ session.key }}</h2>
+        <template v-if="session.key && !isLoading">
+          <h2>{{ session.key }}</h2>
+          <h3>{{ msToTime(session.timestamp) }}</h3>
 
-        <div>
-          <nuxt-link :to="`/s/${session.key}`">Join {{ session.key }}</nuxt-link>
-        </div>
-
-        <h2>{{ msToTime(session.timestamp) }}</h2>
-
-        <button class="k-button" type="button" @click="onClickStart">Start</button>
-        <button class="k-button secondary" type="button" @click="onClickStop">Stop</button>
-      </template>
+          <button class="k-button" type="button" @click="onClickStart">Start</button>
+          <button class="k-button secondary" type="button" @click="onClickStop">Stop</button>
+        </template>
+      </div>
     </div>
   </div>
 </template>
