@@ -58,12 +58,12 @@ h6 {
   }
 
   &.secondary {
-    background-color: lighten(gray, 5%);
+    background-color: darken(gray, 10%);
 
     &:hover,
     &:focus,
     &:active {
-      background-color: darken(gray, 5%);
+      background-color: darken(darken(gray, 10%), 5%);
     }
   }
 }

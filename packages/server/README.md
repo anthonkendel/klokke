@@ -1,3 +1,4 @@
 # Klokke Server
 
-TODO
+Session-based Stopwatch
+

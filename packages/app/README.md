@@ -1,3 +1,3 @@
 # Klokke App
 
-TODO
+Session-based Stopwatch
