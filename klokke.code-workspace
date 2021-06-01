@@ -1,12 +1,15 @@
 {
   "folders": [
     {
+      "name": "Klokke App",
       "path": "packages/app"
     },
     {
+      "name": "Klokke Server",
       "path": "packages/server"
     },
     {
+      "name": "Klokke",
       "path": "."
     }
   ],

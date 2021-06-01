@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <h1>Stopwatch</h1>
+      <h1>Klokke</h1>
       <button class="button" type="button" @click="onClickNew">NEW</button>
     </div>
   </div>

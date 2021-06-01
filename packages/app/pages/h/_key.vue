@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <h1>Stopwatch</h1>
+      <h1>Klokke</h1>
 
       <template v-if="session.key">
         <h2>{{ session.key }}</h2>

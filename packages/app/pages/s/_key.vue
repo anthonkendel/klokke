@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <h1>Stopwatch</h1>
+      <h1>Klokke</h1>
 
       <h2 v-show="session.key">{{ session.key }}</h2>
       <h2 v-show="session.elapsedInMs">{{ msToTime(session.elapsedInMs) }}</h2>
