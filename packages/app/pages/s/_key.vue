@@ -3,66 +3,80 @@
     <div>
       <h1>Klokke</h1>
 
-      <h2 v-show="session.key">{{ session.key }}</h2>
-      <h2 v-show="session.elapsedInMs">{{ msToTime(session.elapsedInMs) }}</h2>
+      <template v-if="session.key && !isLoading">
+        <h2>{{ session.key }}</h2>
 
-      <button class="button" @click="onClickStop">STOP</button>
+        <div>
+          <nuxt-link :to="`/s/${session.key}`">Join {{ session.key }}</nuxt-link>
+        </div>
+
+        <h2>{{ msToTime(session.timestamp) }}</h2>
+
+        <button class="button" type="button" @click="onClickStart">START</button>
+        <button class="button" type="button" @click="onClickStop">STOP</button>
+      </template>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { msToTime } from '~/utils/msToTime'
-import Vue from 'vue'
+import Vue from 'vue';
+import { KAction } from '~/models/Action';
+import { KMessage } from '~/models/Message';
+import { KSessionData } from '~/models/SessionData';
+import { msToTime } from '~/utils/msToTime';
 
 export default Vue.extend({
   data() {
     return {
+      isLoading: true,
       interval: 0,
-      session: {} as Record<string, any>,
+      session: {} as KSessionData,
+      ws: null as null | WebSocket,
+    };
+  },
+
+  created(): void {
+    if (process.client) {
+      const key = this.$route.params.key;
+      this.ws = new WebSocket(`ws://localhost:5050/session/${key}`);
+      this.ws.addEventListener('open', this.onOpen);
+      this.ws.addEventListener('message', this.onMessage);
+      this.ws.addEventListener('error', this.onError);
     }
   },
 
-  async mounted(): Promise<void> {
-    const intervalInMs = 500
-    await this.loadSession()
-    this.interval = window.setInterval(async () => {
-      await this.loadSession()
-    }, intervalInMs)
-  },
-
   beforeDestroy(): void {
-    clearInterval(this.interval)
+    this.ws?.removeEventListener('message', this.onMessage);
+    this.ws?.removeEventListener('error', this.onError);
+    this.ws?.close();
   },
 
   methods: {
     msToTime,
-    async loadSession(): Promise<void> {
-      const session = await this.$axios.$get(
-        `http://localhost:5050/stopwatch/${this.$route.params.key}`
-      )
-      this.session = session
+    onMessage({ data }: MessageEvent): void {
+      const session = JSON.parse(data) as KSessionData;
+
+      this.session = session;
     },
-    async updateSession(action: 'start' | 'stop'): Promise<void> {
-      const session = await this.$axios.$patch(
-        `http://localhost:5050/stopwatch/${this.$route.params.key}`,
-        { action }
-      )
-      this.session = session
+    onOpen(event: Event): void {
+      this.isLoading = false;
+    },
+    onError(event: Event): void {
+      this.$router.push('/');
+    },
+    async onClickStart(): Promise<void> {
+      const message: KMessage = {
+        action: KAction.StartTimer,
+      };
+      this.ws?.send(JSON.stringify(message));
     },
     async onClickStop(): Promise<void> {
-      await this.updateSession('stop')
+      const message: KMessage = {
+        action: KAction.StopTimer,
+      };
+      this.ws?.send(JSON.stringify(message));
     },
   },
-})
+});
 </script>
-
-<style>
-.container {
-  margin: 0 auto;
-  padding: 1rem;
-  max-width: 80rem;
-  min-height: 100vh;
-  display: flex;
-}
-</style>

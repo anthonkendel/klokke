@@ -1,15 +1,15 @@
+import cors from '@koa/cors';
 import KoaRouter from '@koa/router';
 import Koa from 'koa';
 import bodyparser from 'koa-bodyparser';
-import cors from '@koa/cors';
 import { name } from '../package.json';
-import { Logger } from './logger';
-import { generatePetname } from 'javascript-petname';
+import { Logger } from './models/Logger';
+import { KSession } from './models/Session';
 
 const logger = new Logger();
 
 const port = process.env.PORT ? Number(process.env.PORT) : 5050;
-const host = process.env.HOST ?? 'localhost';
+const host = process.env.HOST ?? '0.0.0.0';
 
 const server = new Koa();
 const router = new KoaRouter();
@@ -23,68 +23,24 @@ server.listen(port, host, undefined, () => logger.info(`${name} listening on ${h
 
 type Key = string;
 
-type SSession = {
-  key: Key;
-  elapsedInMs: number;
-};
+const SESSIONS: Record<Key, KSession> = {};
 
-const SESSIONS: Record<Key, SSession> = {};
-const INTERVALS: Record<Key, NodeJS.Timeout> = {};
-
-router.post('/stopwatch', (ctx) => {
-  const key = generatePetname({ words: 2, separator: '-' });
-
-  const session = {
-    key,
-    elapsedInMs: 0,
-  };
-  SESSIONS[key] = session;
-
+router.post('/session', (ctx) => {
+  logger.debug('creating new session');
+  const session = new KSession();
+  SESSIONS[session.key] = session;
   ctx.body = session;
 });
 
-router.get('/stopwatch/:key', (ctx) => {
+router.all('/session/:key', async (ctx, next) => {
   const key = ctx.params.key;
-  const current = SESSIONS[key];
+  const session = SESSIONS[key];
+  const upgrade = ctx.headers.upgrade;
 
-  if (!current) {
-    ctx.status = 404;
-    return;
+  if (upgrade?.includes('websocket') && session) {
+    session.handleUpgrade(ctx.req, ctx.req.socket);
+    ctx.respond = false;
   }
 
-  ctx.body = current;
-});
-
-router.patch('/stopwatch/:key', (ctx) => {
-  const key = ctx.params.key;
-  const current = SESSIONS[key];
-  const action = ctx.request.body?.action;
-
-  if (!current) {
-    ctx.status = 404;
-    return;
-  }
-
-  if (typeof action !== 'string') {
-    ctx.status = 404;
-    return;
-  }
-
-  const actionLowercase = action.toLowerCase();
-  const intervalMs = 100;
-  const interval = INTERVALS[key];
-
-  if (actionLowercase === 'start') {
-    logger.info('start');
-    INTERVALS[key] = setInterval(() => {
-      current.elapsedInMs = current.elapsedInMs + intervalMs;
-    }, intervalMs);
-  }
-
-  if (actionLowercase === 'stop' && interval) {
-    logger.info('stop');
-    clearInterval(interval);
-  }
-
-  ctx.body = current;
+  await next();
 });
