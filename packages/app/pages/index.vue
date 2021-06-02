@@ -5,7 +5,7 @@
     <div class="row center mb-4">
       <div class="column">
         <button class="k-button primary" type="button" @click="onClickNew">
-          <m-icon left>emoji_emotions</m-icon>
+          <m-icon left>timer</m-icon>
           <span>New</span>
         </button>
       </div>

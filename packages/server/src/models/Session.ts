@@ -42,11 +42,7 @@ export class KSession implements KSessionData, KSessionWSS, KSessionTimer {
 
   handleUpgrade(request: IncomingMessage, socket: Socket): void {
     this.webSocketServer.handleUpgrade(request, socket, Buffer.alloc(0), (ws) => {
-      const existingWebSocket = this.webSockets.find((socket) => socket === ws);
-      if (!existingWebSocket) {
-        this.webSockets.push(ws);
-        this.logger.debug('ws:connections', this.numberOfConnections);
-      }
+      this.addWebSocket(ws);
       ws.send(this.stringifiedData);
       ws.on('open', () => this.onOpen(ws));
       ws.on('close', (code, reason) => this.onClose(ws, code, reason));
@@ -75,12 +71,22 @@ export class KSession implements KSessionData, KSessionWSS, KSessionTimer {
     }
   }
 
-  private onOpen(ws: WebSocket): void {
-    this.logger.debug('ws:open');
+  closeConnections(): void {
+    this.logger.debug('closing web sockets');
+    this.webSockets.forEach((socket) => socket.close());
+    this.logger.debug('closing web socket server');
+    this.webSocketServer.close();
   }
 
-  private onClose(ws: WebSocket, code: number, reason: string): void {
-    this.logger.debug('ws:close');
+  private addWebSocket(ws: WebSocket): void {
+    const existingWebSocket = this.webSockets.find((socket) => socket === ws);
+    if (!existingWebSocket) {
+      this.webSockets.push(ws);
+      this.logger.debug('ws:connections', this.numberOfConnections);
+    }
+  }
+
+  private removeWebSocket(ws: WebSocket): void {
     const webSocketIndex = this.webSockets.findIndex((socket) => socket === ws);
     if (webSocketIndex >= 0) {
       this.webSockets.splice(webSocketIndex, 1);
@@ -92,6 +98,15 @@ export class KSession implements KSessionData, KSessionWSS, KSessionTimer {
         this.resetTimestamp();
       }
     }
+  }
+
+  private onOpen(ws: WebSocket): void {
+    this.logger.debug('ws:open');
+  }
+
+  private onClose(ws: WebSocket, code: number, reason: string): void {
+    this.logger.debug('ws:close');
+    this.removeWebSocket(ws);
   }
 
   private onMessage(ws: WebSocket, data: WebSocket.Data): void {

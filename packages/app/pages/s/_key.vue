@@ -5,20 +5,31 @@
     <div class="row center">
       <div class="column text-center">
         <div v-if="showSessionDetails">
-          <h2>{{ session.key }}</h2>
-          <h3>{{ msToTime(session.timestamp) }}</h3>
+          <div class="mb-4">
+            <h2>{{ session.key }}</h2>
+            <h3>{{ msToTime(session.timestamp) }}</h3>
+          </div>
 
-          <button class="k-button primary" type="button" @click="onClickStart">
-            <m-icon left>play_arrow</m-icon>
-            <span>Start</span>
+          <button @click="onClickStart" aria-label="Start Timer" class="k-button primary" type="button" title="Start">
+            <m-icon>play_arrow</m-icon>
           </button>
-          <button class="k-button secondary" type="button" @click="onClickPause">
-            <m-icon left>pause</m-icon>
-            <span>Pause</span>
+
+          <button @click="onClickPause" aria-label="Pause Timer" class="k-button secondary" type="button" title="Pause">
+            <m-icon>pause</m-icon>
           </button>
-          <button class="k-button" type="button" @click="onClickReset">
-            <m-icon left>replay</m-icon>
-            <span>Reset</span>
+
+          <button @click="onClickReset" aria-label="Reset Timer" class="k-button" title="Reset" type="button">
+            <m-icon>replay</m-icon>
+          </button>
+
+          <button
+            @click="onClickCloseSession"
+            aria-label="Close Session"
+            class="k-button danger"
+            title="Close Session"
+            type="button"
+          >
+            <m-icon>delete_forever</m-icon>
           </button>
         </div>
       </div>
@@ -35,7 +46,15 @@ import { KSessionData } from '~/models/SessionData';
 import { msToTime } from '~/utils/msToTime';
 
 export default Vue.extend({
+  head() {
+    const vm = this as any;
+    return {
+      title: ['Klokke', vm?.session?.key].filter((v) => v).join(' | '),
+    };
+  },
+
   components: { MIcon },
+
   data() {
     return {
       isLoading: true,
@@ -48,7 +67,7 @@ export default Vue.extend({
   created(): void {
     if (process.client) {
       const key = this.$route.params.key;
-      this.ws = new WebSocket(`ws://localhost:5050/session/${key}`);
+      this.ws = new WebSocket(`ws://localhost:5050/session-ws/${key}`);
       this.ws.addEventListener('open', this.onOpen);
       this.ws.addEventListener('message', this.onMessage);
       this.ws.addEventListener('error', this.onError);
@@ -78,7 +97,7 @@ export default Vue.extend({
       this.isLoading = false;
     },
     onError(event: Event): void {
-      this.$router.push('/');
+      this.$router.replace('/');
     },
     onClickStart(): void {
       const message: KMessage = {
@@ -97,6 +116,10 @@ export default Vue.extend({
         action: KAction.ResetTimer,
       };
       this.ws?.send(JSON.stringify(message));
+    },
+    async onClickCloseSession(): Promise<void> {
+      await this.$axios.$delete(`http://localhost:5050/session/${this.session.key}`);
+      this.$router.replace('/');
     },
   },
 });

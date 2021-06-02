@@ -11,6 +11,8 @@ $whiteish: whitesmoke;
 $whiteish-d: darken($whiteish, 10%);
 $whiteish-l: lighten($whiteish, 2%);
 
+$danger: darken(indianred, 20%);
+$danger-d: darken($danger, 10%);
 
 :root {
   --blackish: #{$blackish};
@@ -25,4 +27,7 @@ $whiteish-l: lighten($whiteish, 2%);
   --whiteish: #{$whiteish};
   --whiteish-d: #{$whiteish-d};
   --whiteish-l: #{$whiteish-l};
+
+  --danger: #{$danger};
+  --danger-d: #{$danger-d};
 }

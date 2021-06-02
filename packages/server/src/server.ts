@@ -26,13 +26,23 @@ type Key = string;
 const SESSIONS: Record<Key, KSession> = {};
 
 router.post('/session', (ctx) => {
-  logger.debug('creating new session');
   const session = new KSession();
+  logger.debug(`creating session ${session.key}`);
   SESSIONS[session.key] = session;
   ctx.body = session;
 });
 
-router.all('/session/:key', async (ctx, next) => {
+router.delete('/session/:key', (ctx) => {
+  const key = ctx.params.key;
+  logger.debug(`deleting session ${key}`);
+  const session = SESSIONS[key];
+  delete SESSIONS[key];
+
+  ctx.status = 200;
+  if (session) session.closeConnections();
+});
+
+router.all('/session-ws/:key', async (ctx, next) => {
   const key = ctx.params.key;
   const session = SESSIONS[key];
   const upgrade = ctx.headers.upgrade;

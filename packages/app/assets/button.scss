@@ -45,4 +45,14 @@
     margin-left: auto;
     margin-right: auto;
   }
+
+  &.danger {
+    background-color: var(--danger);
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: var(--danger-d);
+    }
+  }
 }
