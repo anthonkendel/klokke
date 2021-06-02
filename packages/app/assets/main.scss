@@ -1,12 +1,24 @@
 @import './colors.scss';
 @import './elements.scss';
 @import './button.scss';
+@import './input.scss';
 
 .container {
   height: 100vh;
   margin: 0 auto;
   max-width: 1000px;
   padding: 1rem;
+
+  &.center {
+    align-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.display-inline {
+  display: inline;
 }
 
 .text-center {
@@ -15,7 +27,7 @@
 
 .row {
   display: flex;
-  height: 100%;
+  margin-bottom: 1rem;
 
   &.center {
     justify-content: center;
@@ -24,5 +36,7 @@
 
   .column {
     display: block;
+    margin-right: 1rem;
+    margin-left: 1rem;
   }
 }

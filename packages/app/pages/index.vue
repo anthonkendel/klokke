@@ -1,9 +1,32 @@
 <template>
-  <div class="container">
+  <div class="container center">
+    <h1 class="text-center">Klokke</h1>
+
+    <div class="row center">
+      <div class="column">
+        <button class="k-button primary" type="button" @click="onClickNew">New</button>
+      </div>
+    </div>
+
     <div class="row center">
       <div class="column text-center">
-        <h1>Klokke</h1>
-        <button class="k-button primary" type="button" @click="onClickNew">New</button>
+        <form @submit.prevent="onSubmitJoin">
+          <p>To join an existing session, enter the key and press Join.</p>
+
+          <div class="k-label-input">
+            <label for="session-key-to-join" class="k-label">Key</label>
+            <input
+              autocomplete="one-time-code"
+              class="k-input"
+              id="session-key-to-join"
+              name="session-key-to-join"
+              type="text"
+              v-model="sessionKeyToJoin"
+            />
+          </div>
+
+          <button class="k-button secondary display-inline" type="submit">Join</button>
+        </form>
       </div>
     </div>
   </div>
@@ -15,20 +38,17 @@ import Vue from 'vue';
 export default Vue.extend({
   data() {
     return {
-      interval: 0,
-      session: {} as Record<string, any>,
+      sessionKeyToJoin: '',
     };
-  },
-
-  beforeDestroy(): void {
-    clearInterval(this.interval);
   },
 
   methods: {
     async onClickNew(): Promise<void> {
       const session = await this.$axios.$post('http://localhost:5050/session');
-      this.session = session;
-      await this.$router.push(`/s/${this.session.key}`);
+      await this.$router.push(`/s/${session.key}`);
+    },
+    async onSubmitJoin(): Promise<void> {
+      await this.$router.push(`/s/${this.sessionKeyToJoin}`);
     },
   },
 });

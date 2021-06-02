@@ -9,6 +9,7 @@ $secondary-d: darken($secondary, 10%);
 
 $whiteish: whitesmoke;
 $whiteish-d: darken($whiteish, 10%);
+$whiteish-l: lighten($whiteish, 2%);
 
 
 :root {
@@ -23,4 +24,5 @@ $whiteish-d: darken($whiteish, 10%);
 
   --whiteish: #{$whiteish};
   --whiteish-d: #{$whiteish-d};
+  --whiteish-l: #{$whiteish-l};
 }

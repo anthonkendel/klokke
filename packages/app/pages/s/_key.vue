@@ -1,10 +1,10 @@
 <template>
-  <div class="container">
+  <div class="container center">
+    <h1 class="text-center">Klokke</h1>
+
     <div class="row center">
       <div class="column text-center">
-        <h1>Klokke</h1>
-
-        <template v-if="session.key && !isLoading">
+        <template v-if="showSessionDetails">
           <h2>{{ session.key }}</h2>
           <h3>{{ msToTime(session.timestamp) }}</h3>
 
@@ -40,6 +40,12 @@ export default Vue.extend({
       this.ws.addEventListener('open', this.onOpen);
       this.ws.addEventListener('message', this.onMessage);
       this.ws.addEventListener('error', this.onError);
+    }
+  },
+
+  computed: {
+    showSessionDetails(): boolean {
+      return Boolean(this.session.key) && this.isLoading === false;
     }
   },
 
