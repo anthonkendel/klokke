@@ -1,17 +1,6 @@
-body {
-  font-size: 18px;
-  font-family: 'Open Sans', sans-serif;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: 'Nunito', sans-serif;
-  margin-bottom: 0.5rem;
-}
+@import './colors.scss';
+@import './elements.scss';
+@import './button.scss';
 
 .container {
   height: 100vh;
@@ -35,45 +24,5 @@ h6 {
 
   .column {
     display: block;
-  }
-}
-
-.k-button {
-  background-color: lighten(black, 20%);
-  border-radius: 10rem;
-  border: 1px solid whitesmoke;
-  color: whitesmoke;
-  font-size: 1rem;
-  font-weight: normal;
-  letter-spacing: 0.05rem;
-  min-width: 6rem;
-  padding: 0.8rem 0.5rem;
-  text-transform: capitalize;
-  transition: background-color 500ms;
-
-  &:hover,
-  &:focus,
-  &:active {
-    background-color: darken(lighten(black, 20%), 5%);
-  }
-
-  &.primary {
-    background-color: lighten(darkslategray, 5%);
-
-    &:hover,
-    &:focus,
-    &:active {
-      background-color: darken(lighten(darkslategray, 5%), 5%);
-    }
-  }
-
-  &.secondary {
-    background-color: darken(gray, 10%);
-
-    &:hover,
-    &:focus,
-    &:active {
-      background-color: darken(darken(gray, 10%), 5%);
-    }
   }
 }

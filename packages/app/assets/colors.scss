@@ -1,0 +1,26 @@
+$blackish: lighten(black, 20%);
+$blackish-d: darken($blackish, 10%);
+
+$primary: lighten(darkslategray, 5%);
+$primary-d: darken($primary, 10%);
+
+$secondary: darken(gray, 10%);
+$secondary-d: darken($secondary, 10%);
+
+$whiteish: whitesmoke;
+$whiteish-d: darken($whiteish, 10%);
+
+
+:root {
+  --blackish: #{$blackish};
+  --blackish-d: #{$blackish-d};
+
+  --primary: #{$primary};
+  --primary-d: #{$primary-d};
+
+  --secondary: #{$secondary};
+  --secondary-d: #{$secondary-d};
+
+  --whiteish: #{$whiteish};
+  --whiteish-d: #{$whiteish-d};
+}
