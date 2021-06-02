@@ -2,9 +2,12 @@
   <div class="container center">
     <h1 class="text-center">Klokke</h1>
 
-    <div class="row center">
+    <div class="row center mb-4">
       <div class="column">
-        <button class="k-button primary" type="button" @click="onClickNew">New</button>
+        <button class="k-button primary" type="button" @click="onClickNew">
+          <m-icon left>emoji_emotions</m-icon>
+          <span>New</span>
+        </button>
       </div>
     </div>
 
@@ -25,7 +28,10 @@
             />
           </div>
 
-          <button class="k-button secondary display-inline" type="submit">Join</button>
+          <button class="k-button secondary center" type="submit">
+            <m-icon left>groups</m-icon>
+            <span>Join</span>
+          </button>
         </form>
       </div>
     </div>
@@ -34,8 +40,11 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import MIcon from '~/components/MIcon.vue';
 
 export default Vue.extend({
+  components: { MIcon },
+
   data() {
     return {
       sessionKeyToJoin: '',

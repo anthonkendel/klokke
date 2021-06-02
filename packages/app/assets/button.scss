@@ -1,14 +1,17 @@
 .k-button {
+  align-items: center;
   background-color: var(--blackish);
   border-radius: 10rem;
   border: 1px solid var(--whiteish);
   color: var(--whiteish);
+  display: inline-flex;
   font-size: 1rem;
   font-weight: normal;
+  justify-content: center;
   letter-spacing: 1px;
   margin-bottom: 0.5rem;
   min-width: 6rem;
-  padding: 0.8rem 0.5rem;
+  padding: 0.5rem 1rem;
   text-transform: capitalize;
   transition: background-color 500ms;
 
@@ -36,5 +39,10 @@
     &:active {
       background-color: var(--secondary-d);
     }
+  }
+
+  &.center {
+    margin-left: auto;
+    margin-right: auto;
   }
 }

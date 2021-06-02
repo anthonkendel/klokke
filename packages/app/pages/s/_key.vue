@@ -4,14 +4,23 @@
 
     <div class="row center">
       <div class="column text-center">
-        <template v-if="showSessionDetails">
+        <div v-if="showSessionDetails">
           <h2>{{ session.key }}</h2>
           <h3>{{ msToTime(session.timestamp) }}</h3>
 
-          <button class="k-button primary" type="button" @click="onClickStart">Start</button>
-          <button class="k-button secondary" type="button" @click="onClickPause">Pause</button>
-          <button class="k-button" type="button" @click="onClickReset">Reset</button>
-        </template>
+          <button class="k-button primary" type="button" @click="onClickStart">
+            <m-icon left>play_arrow</m-icon>
+            <span>Start</span>
+          </button>
+          <button class="k-button secondary" type="button" @click="onClickPause">
+            <m-icon left>pause</m-icon>
+            <span>Pause</span>
+          </button>
+          <button class="k-button" type="button" @click="onClickReset">
+            <m-icon left>replay</m-icon>
+            <span>Reset</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -19,12 +28,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import MIcon from '~/components/MIcon.vue';
 import { KAction } from '~/models/Action';
 import { KMessage } from '~/models/Message';
 import { KSessionData } from '~/models/SessionData';
 import { msToTime } from '~/utils/msToTime';
 
 export default Vue.extend({
+  components: { MIcon },
   data() {
     return {
       isLoading: true,
@@ -47,7 +58,7 @@ export default Vue.extend({
   computed: {
     showSessionDetails(): boolean {
       return Boolean(this.session.key) && this.isLoading === false;
-    }
+    },
   },
 
   beforeDestroy(): void {
@@ -69,7 +80,7 @@ export default Vue.extend({
     onError(event: Event): void {
       this.$router.push('/');
     },
-    onClickStart():void {
+    onClickStart(): void {
       const message: KMessage = {
         action: KAction.StartTimer,
       };
