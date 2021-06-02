@@ -1,4 +1,5 @@
 export enum KAction {
   StartTimer = 'StartTimer',
-  StopTimer = 'StopTimer',
+  PauseTimer = 'PauseTimer',
+  ResetTimer = 'ResetTimer',
 }

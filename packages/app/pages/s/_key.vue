@@ -9,7 +9,8 @@
           <h3>{{ msToTime(session.timestamp) }}</h3>
 
           <button class="k-button primary" type="button" @click="onClickStart">Start</button>
-          <button class="k-button secondary" type="button" @click="onClickStop">Stop</button>
+          <button class="k-button secondary" type="button" @click="onClickPause">Pause</button>
+          <button class="k-button" type="button" @click="onClickReset">Reset</button>
         </template>
       </div>
     </div>
@@ -68,15 +69,21 @@ export default Vue.extend({
     onError(event: Event): void {
       this.$router.push('/');
     },
-    async onClickStart(): Promise<void> {
+    onClickStart():void {
       const message: KMessage = {
         action: KAction.StartTimer,
       };
       this.ws?.send(JSON.stringify(message));
     },
-    async onClickStop(): Promise<void> {
+    onClickPause(): void {
       const message: KMessage = {
-        action: KAction.StopTimer,
+        action: KAction.PauseTimer,
+      };
+      this.ws?.send(JSON.stringify(message));
+    },
+    onClickReset(): void {
+      const message: KMessage = {
+        action: KAction.ResetTimer,
       };
       this.ws?.send(JSON.stringify(message));
     },

@@ -68,7 +68,7 @@ export class KSession implements KSessionData, KSessionWSS, KSessionTimer {
     }, this.timerMs);
   }
 
-  stopTimer(): void {
+  pauseTimer(): void {
     if (this.timer) {
       clearInterval(this.timer);
       this.timer = undefined;
@@ -88,7 +88,7 @@ export class KSession implements KSessionData, KSessionWSS, KSessionTimer {
 
       if (this.numberOfConnections === 0) {
         this.logger.info('there is no connections left, stopping and resetting timer');
-        this.stopTimer();
+        this.pauseTimer();
         this.resetTimestamp();
       }
     }
@@ -104,8 +104,14 @@ export class KSession implements KSessionData, KSessionWSS, KSessionTimer {
         ws.send(this.stringifiedData);
         break;
 
-      case KAction.StopTimer:
-        this.stopTimer();
+      case KAction.PauseTimer:
+        this.pauseTimer();
+        ws.send(this.stringifiedData);
+        break;
+
+      case KAction.ResetTimer:
+        this.pauseTimer();
+        this.resetTimestamp();
         ws.send(this.stringifiedData);
         break;
 
@@ -118,7 +124,7 @@ export class KSession implements KSessionData, KSessionWSS, KSessionTimer {
     this.logger.debug('ws:error');
     this.logger.debug(error);
     this.logger.info('something went wrong, stopping and resetting timer');
-    this.stopTimer();
+    this.pauseTimer();
     this.resetTimestamp();
   }
 }
