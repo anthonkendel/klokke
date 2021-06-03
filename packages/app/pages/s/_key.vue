@@ -10,22 +10,22 @@
             <h3>{{ msToTime(session.timestamp) }}</h3>
           </div>
 
-          <button @click="onClickStart" aria-label="Start Timer" class="k-button primary" type="button" title="Start">
+          <button @click="onClickStart" aria-label="Start Timer" class="k-button primary round" type="button" title="Start">
             <m-icon>play_arrow</m-icon>
           </button>
 
-          <button @click="onClickPause" aria-label="Pause Timer" class="k-button secondary" type="button" title="Pause">
+          <button @click="onClickPause" aria-label="Pause Timer" class="k-button secondary round" type="button" title="Pause">
             <m-icon>pause</m-icon>
           </button>
 
-          <button @click="onClickReset" aria-label="Reset Timer" class="k-button" title="Reset" type="button">
+          <button @click="onClickReset" aria-label="Reset Timer" class="k-button round" title="Reset" type="button">
             <m-icon>replay</m-icon>
           </button>
 
           <button
             @click="onClickCloseSession"
             aria-label="Close Session"
-            class="k-button danger"
+            class="k-button danger round"
             title="Close Session"
             type="button"
           >
