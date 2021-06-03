@@ -2,7 +2,7 @@
   align-items: center;
   background-color: var(--blackish);
   border-radius: 10rem;
-  border: 1px solid var(--whiteish);
+  border: none;
   color: var(--whiteish);
   display: inline-flex;
   font-size: 1rem;
@@ -14,6 +14,7 @@
   padding: 0.5rem 1rem;
   text-transform: capitalize;
   transition: background-color 500ms;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   &:hover,
   &:focus,
