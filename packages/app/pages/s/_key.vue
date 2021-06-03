@@ -10,11 +10,23 @@
             <h3>{{ msToTime(session.timestamp) }}</h3>
           </div>
 
-          <button @click="onClickStart" aria-label="Start Timer" class="k-button primary round" type="button" title="Start">
+          <button
+            @click="onClickStart"
+            aria-label="Start Timer"
+            class="k-button primary round"
+            type="button"
+            title="Start"
+          >
             <m-icon>play_arrow</m-icon>
           </button>
 
-          <button @click="onClickPause" aria-label="Pause Timer" class="k-button secondary round" type="button" title="Pause">
+          <button
+            @click="onClickPause"
+            aria-label="Pause Timer"
+            class="k-button secondary round"
+            type="button"
+            title="Pause"
+          >
             <m-icon>pause</m-icon>
           </button>
 
@@ -67,7 +79,12 @@ export default Vue.extend({
   created(): void {
     if (process.client) {
       const key = this.$route.params.key;
-      this.ws = new WebSocket(`ws://localhost:5050/session-ws/${key}`);
+      const baseURL = this.$axios.defaults.baseURL as string;
+      const hostnameIndex = baseURL.lastIndexOf('://');
+      const websocket = baseURL.includes('https://') ? 'wss' : 'ws';
+      const hostname = baseURL.slice(hostnameIndex + 3);
+
+      this.ws = new WebSocket(`${websocket}://${hostname}/session-ws/${key}`);
       this.ws.addEventListener('open', this.onOpen);
       this.ws.addEventListener('message', this.onMessage);
       this.ws.addEventListener('error', this.onError);
@@ -118,7 +135,7 @@ export default Vue.extend({
       this.ws?.send(JSON.stringify(message));
     },
     async onClickCloseSession(): Promise<void> {
-      await this.$axios.$delete(`http://localhost:5050/session/${this.session.key}`);
+      await this.$axios.$delete(`/session/${this.session.key}`);
       this.$router.replace('/');
     },
   },

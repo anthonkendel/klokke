@@ -29,7 +29,7 @@ router.post('/session', (ctx) => {
   const session = new KSession();
   logger.debug(`creating session ${session.key}`);
   SESSIONS[session.key] = session;
-  ctx.body = session;
+  ctx.body = session.data;
 });
 
 router.delete('/session/:key', (ctx) => {

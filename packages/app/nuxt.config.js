@@ -26,7 +26,9 @@ export default {
 
   modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxt/content'],
 
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:5050'
+  },
 
   pwa: {
     manifest: {
@@ -37,4 +39,10 @@ export default {
   content: {},
 
   build: {},
+
+  publicRuntimeConfig: {
+    axios: {
+      baseURL: process.env.BASE_URL,
+    },
+  },
 };
