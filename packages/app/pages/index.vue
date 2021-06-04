@@ -2,7 +2,7 @@
   <div class="container center">
     <h1 class="text-center">Klokke</h1>
 
-    <div class="row center mb-4">
+    <div class="row center mb-2">
       <div class="column">
         <button class="k-button primary" type="button" @click="onClickNew">
           <m-icon left>timer</m-icon>
