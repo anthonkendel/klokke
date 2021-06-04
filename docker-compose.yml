@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  app:
+    environment:
+      - BASE_URL=http://localhost:3001
+    build:
+      context: .
+      dockerfile: ./packages/app/Dockerfile
+    ports:
+      - "80:3000"
+
+  server:
+    build:
+      context: .
+      dockerfile: ./packages/server/Dockerfile
+    ports:
+      - "3001:3001"

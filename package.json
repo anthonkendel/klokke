@@ -1,0 +1,21 @@
+{
+  "name": "klokke",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build:app": "npm --prefix packages/app run build",
+    "build:server": "npm --prefix packages/server run build",
+    "build": "npm run build:app && npm run build:server",
+    "install:app": "npm --prefix packages/app install",
+    "install:server": "npm --prefix packages/server install",
+    "install": "npm run install:app && npm run install:server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anthonkendel/klokke.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anthonkendel/klokke/issues"
+  },
+  "homepage": "https://github.com/anthonkendel/klokke#readme"
+}
