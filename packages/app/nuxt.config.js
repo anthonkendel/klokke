@@ -1,6 +1,8 @@
+const appName = 'Klokke';
+
 export default {
   head: {
-    title: 'Klokke',
+    title: appName,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -27,12 +29,15 @@ export default {
   modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxt/content'],
 
   axios: {
-    baseURL: 'http://localhost:5050'
+    baseURL: 'http://localhost:5050',
   },
 
   pwa: {
     manifest: {
       lang: 'en',
+    },
+    meta: {
+      name: appName,
     },
   },
 
