@@ -7,6 +7,17 @@ p {
   margin-bottom: 0.8rem;
 }
 
+a {
+  font-style: italic;
+  color: var(--primary);
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: var(--primary-d);
+  }
+}
+
 h1,
 h2,
 h3,

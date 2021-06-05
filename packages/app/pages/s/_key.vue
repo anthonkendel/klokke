@@ -5,10 +5,12 @@
     <div class="row center">
       <div class="column text-center">
         <div v-if="showSessionDetails">
-          <div class="mb-3">
-            <h2>{{ session.key }}</h2>
-            <h2>{{ msToTime(session.timestamp) }}</h2>
-          </div>
+          <h2 class="mb-2">
+            <nuxt-link :to="`/s/${session.key}`" target="_blank" rel="noopener noreferrer" @click.native="onClickKey">{{
+              session.key
+            }}</nuxt-link>
+          </h2>
+          <h2 class="mb-2">{{ msToTime(session.timestamp) }}</h2>
 
           <button
             @click="onClickStart"
@@ -111,6 +113,15 @@ export default Vue.extend({
     },
     onError(event: Event): void {
       this.$router.replace('/');
+    },
+    async onClickKey(event: Event): Promise<void> {
+      if (!!navigator?.share) {
+        event.preventDefault();
+        await navigator.share({
+          title: ['Klokke', this.session?.key].filter((v) => v).join(' | '),
+          url: window.location.href,
+        });
+      }
     },
     onClickStart(): void {
       const message: KMessage = {
