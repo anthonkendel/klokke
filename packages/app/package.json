@@ -1,5 +1,6 @@
 {
   "name": "klokke-app",
+  "description": "Session-based Stopwatch",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -14,6 +15,7 @@
   "dependencies": {
     "@nuxt/content": "^1.14.0",
     "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/proxy": "^2.1.0",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.9.1",
     "nuxt": "^2.15.3"

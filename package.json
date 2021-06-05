@@ -11,7 +11,7 @@
     "install": "npm run install:app && npm run install:server",
     "start:app": "npm --prefix packages/app start",
     "start:server": "npm --prefix packages/server start",
-    "start": "npm run start:app & npm run start:server"
+    "start": "npm run start:app & PORT=5050 npm run start:server"
   },
   "repository": {
     "type": "git",

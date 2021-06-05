@@ -1,5 +1,7 @@
 const appName = 'Klokke';
 
+const SERVER_ENDPOINT = 'localhost:5050';
+
 export default {
   head: {
     title: appName,
@@ -26,28 +28,33 @@ export default {
 
   buildModules: ['@nuxt/typescript-build'],
 
-  modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxt/content'],
+  modules: ['@nuxtjs/axios', '@nuxtjs/pwa', '@nuxt/content', '@nuxtjs/proxy'],
 
   axios: {
-    baseURL: 'http://localhost:5050',
+    proxy: true,
   },
 
   pwa: {
     manifest: {
       lang: 'en',
-    },
-    meta: {
       name: appName,
+      short_name: appName,
     },
   },
 
   content: {},
 
-  build: {},
-
-  publicRuntimeConfig: {
-    axios: {
-      baseURL: process.env.BASE_URL,
+  proxy: {
+    '/api/': {
+      target: `http://${SERVER_ENDPOINT}`,
+      pathRewrite: { '^/api/': '/' },
+    },
+    '/ws/': {
+      target: `http://${SERVER_ENDPOINT}`,
+      pathRewrite: { '^/ws/': '/' },
+      ws: true,
     },
   },
+
+  build: {},
 };
