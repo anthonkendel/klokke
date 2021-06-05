@@ -8,7 +8,10 @@
     "build": "npm run build:app && npm run build:server",
     "install:app": "npm --prefix packages/app install",
     "install:server": "npm --prefix packages/server install",
-    "install": "npm run install:app && npm run install:server"
+    "install": "npm run install:app && npm run install:server",
+    "start:app": "npm --prefix packages/app start",
+    "start:server": "npm --prefix packages/server start",
+    "start": "npm run start:app & npm run start:server"
   },
   "repository": {
     "type": "git",
