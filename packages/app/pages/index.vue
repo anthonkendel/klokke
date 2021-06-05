@@ -1,6 +1,6 @@
 <template>
   <div class="container center">
-    <h1 class="text-center">Klokke</h1>
+    <h1 class="text-center mb-2">Klokke</h1>
 
     <div class="row center mb-2">
       <div class="column">
@@ -12,26 +12,31 @@
     </div>
 
     <div class="row center">
-      <div class="column text-center">
+      <div class="column">
         <form @submit.prevent="onSubmitJoin">
-          <p>To join an existing session, enter the key and press Join.</p>
+          <p class="text-center">To join an existing session, <br />enter the key and press Join.</p>
+          <div class="row center align-end">
+            <div class="column">
+              <div class="k-label-input">
+                <label for="session-key-to-join" class="k-label">Key</label>
+                <input
+                  autocomplete="one-time-code"
+                  class="k-input"
+                  id="session-key-to-join"
+                  name="session-key-to-join"
+                  type="text"
+                  v-model="sessionKeyToJoin"
+                />
+              </div>
+            </div>
 
-          <div class="k-label-input">
-            <label for="session-key-to-join" class="k-label">Key</label>
-            <input
-              autocomplete="one-time-code"
-              class="k-input"
-              id="session-key-to-join"
-              name="session-key-to-join"
-              type="text"
-              v-model="sessionKeyToJoin"
-            />
+            <div class="column">
+              <button class="k-button secondary center" type="submit">
+                <m-icon left>groups</m-icon>
+                <span>Join</span>
+              </button>
+            </div>
           </div>
-
-          <button class="k-button secondary center" type="submit">
-            <m-icon left>groups</m-icon>
-            <span>Join</span>
-          </button>
         </form>
       </div>
     </div>

@@ -1,13 +1,13 @@
 <template>
   <div class="container center">
-    <h1 class="text-center">Klokke</h1>
+    <h1 class="text-center mb-2">Klokke</h1>
 
     <div class="row center">
       <div class="column text-center">
         <div v-if="showSessionDetails">
-          <div class="mb-4">
+          <div class="mb-3">
             <h2>{{ session.key }}</h2>
-            <h3>{{ msToTime(session.timestamp) }}</h3>
+            <h2>{{ msToTime(session.timestamp) }}</h2>
           </div>
 
           <button
