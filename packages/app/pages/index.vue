@@ -53,7 +53,7 @@ export default Vue.extend({
 
   methods: {
     async onClickNew(): Promise<void> {
-      const session = await this.$axios.$post('/session');
+      const session = await this.$axios.$post('/api/session');
       await this.$router.push(`/s/${session.key}`);
     },
     async onSubmitJoin(): Promise<void> {
